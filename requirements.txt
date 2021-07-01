@@ -1,0 +1,12 @@
+aiohttp
+async-timeout
+attrs
+chardet
+discord
+discord.py
+idna
+multidict
+typing-extensions
+yarl
+psycopg2-binary
+Pillow
