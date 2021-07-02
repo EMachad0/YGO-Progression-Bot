@@ -44,7 +44,8 @@ class UserData(commands.Cog):
             else:
                 row = row[0]
                 embed = Embed(colour=0xFF0000)
-                embed.add_field(name='Info:', value='To do :)')
+                embed.add_field(name='Collection:', value=f"https://ygo-prog-web.herokuapp.com/collection/{guild.id}/{user.id}#")
+                
                 embed.set_author(name=row['name'], icon_url=row['img_url'])
                 await message.channel.send(embed=embed)
 
