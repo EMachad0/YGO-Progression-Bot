@@ -6,7 +6,8 @@ client = commands.Bot(command_prefix='?', description="YGOPROGBOT")
 
 startup_extensions = [
     'pack_simulator',
-    'server_data', 'user_data'
+    'server_data', 'user_data',
+    'openings'
 ]
 
 
