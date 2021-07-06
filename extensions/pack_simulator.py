@@ -1,18 +1,19 @@
 from io import BytesIO
-from random import choices
 
 from discord import File
 from discord.ext import commands
 
-from notebooks import db
+from notebooks import db, pack_opener
 from notebooks.concat_images import concat_images
 
-PACK_QUERY = "select pull_cod, cod_img from " \
+PACK_QUERY = "select pull_cod, cod_img, rarity from " \
              "(select card_cod, cod_img from card) c join" \
-             "(select card_cod, pull_cod from pull where set_cod=%s and rarity=%s) p on c.card_cod = p.card_cod;"
+             "(select card_cod, pull_cod, rarity from pull where set_cod=%s) p on c.card_cod = p.card_cod;"
+OPENING_SELECT = "select set_cod, quantity from opening where player_cod=%s;"
 COLLECTION_INSERT = "insert into collection(player_cod, pull_cod) values" \
                     "(%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s);"
 PLAYER_SELECT = "select player_cod from player where user_cod=%s and server_cod=%s;"
+
 
 async def send_pack_image(channel, pack):
     paths = [f"data/card_images_small/{card['cod_img']}.jpg" for card in pack]
@@ -22,46 +23,61 @@ async def send_pack_image(channel, pack):
         await channel.send(file=File(fp=image_binary, filename='image.jpg'))
 
 
-def get_random_rarity():
-    rarity = ['Super Rare', 'Ultra Rare', 'Secret Rare']
-    odds = [9, 2, 1]
-    return choices(rarity, weights=odds, k=1)[0]
-
-def get_random_pack(sett):
-    com = db.make_select(PACK_QUERY, (sett, 'Common'))
-    rar = db.make_select(PACK_QUERY, (sett, 'Rare'))
-    foi = db.make_select(PACK_QUERY, (sett, get_random_rarity()))
-    pack = choices(com, k=7) + choices(rar) + choices(foi)
-    return pack
-
 class PackSimulator(commands.Cog):
     def __init__(self, client):
         self.client = client
         
     @commands.Cog.listener()
     async def on_message(self, message):
+        user = message.author
+        guild = message.guild
+        params = message.content.split() + [None] * 5
         if message.author == self.client.user:
             return
         if message.content.startswith('$pack'):
-            values = (message.author.id, message.guild.id)
+            values = (user.id, guild.id)
             player = db.make_select(PLAYER_SELECT, values)
             if len(player) == 0:
                 await message.channel.send("You're Not a player")
                 return
-            player = player[0]
+            player = player[0]['player_cod']
+            quantity = int(params[1]) if params[1] else 1
+            openings = db.make_select(OPENING_SELECT, [player])
             
-            await message.channel.send("Opening...")
-            pack = get_random_pack('LOB')
-            await send_pack_image(message.channel, pack)
-            values = sum(((player['player_cod'], c['pull_cod']) for c in pack), ())
-            db.make_query(COLLECTION_INSERT, values)
+            soma = sum(op['quantity'] for op in openings)
+            if soma == 0:
+                await message.channel.send("You don't have any packs to open!")
+                return
+            if soma < quantity:
+                await message.channel.send(f"Opening all available {soma} packs!")
+            else:
+                await message.channel.send("Opening...")
+                
+            for op in openings:
+                if quantity == 0:
+                    break
+                if op['quantity'] == 0:
+                    continue
+                    
+                sett = op['set_cod']
+                set_cards = db.make_select(PACK_QUERY, [sett])
+                card_pool = pack_opener.get_card_pool(set_cards)
+                
+                getting = min(quantity, op['quantity'])
+                quantity -= getting
+                for _ in range(getting):
+                    pack = pack_opener.get_random_pack(card_pool)
+                    await send_pack_image(message.channel, pack)
+                    values = sum(((player, c['pull_cod']) for c in pack), ())
+                    db.make_query(COLLECTION_INSERT, values)
 
 
 def setup(bot):
     bot.add_cog(PackSimulator(bot))
     
 if __name__ == "__main__":
-    pk = get_random_pack('LOB')
+    sc = db.make_select(PACK_QUERY, ['LOB'])
+    cp = pack_opener.get_card_pool(sc)
+    pk = pack_opener.get_random_pack(cp)
     val = sum(((6, c['pull_cod']) for c in pk), ())
-    db.make_query(COLLECTION_INSERT, val)
     db.make_query(COLLECTION_INSERT, val)
