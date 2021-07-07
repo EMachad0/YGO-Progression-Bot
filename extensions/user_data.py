@@ -10,6 +10,7 @@ USER_QUERY = "insert into discord_user values (%s, %s, %s, %s) on conflict (user
 PLAYER_INSERT = "insert into player values (default, %s, %s) on conflict do nothing;"
 PLAYER_SELECT = "select * from player p join discord_user du on du.user_cod = p.user_cod where p.user_cod=%s and server_cod=%s;"
 PLAYER_DROP = "delete from player where user_cod=%s and server_cod=%s;"
+OPENING_SELECT = "select * from opening where player_cod=%s and quantity > 0;"
 
 class UserData(commands.Cog):
     def __init__(self, client):
@@ -40,8 +41,10 @@ class UserData(commands.Cog):
             else:
                 row = row[0]
                 embed = Embed(colour=0xFF0000)
-                embed.add_field(name='Collection:', value=f"https://ygo-prog-web.herokuapp.com/collection/{guild.id}/{user.id}#")
-                
+                openings = db.make_select(OPENING_SELECT, [row['player_cod']])
+                to_open = "\n".join(f"{op['set_cod']}: {op['quantity']}" for op in openings) if len(openings) > 0 else "Nothing!"
+                embed.add_field(name='Packs to open:', value=to_open, inline=False)
+                embed.add_field(name='Collection:', value=f"https://ygo-prog-web.herokuapp.com/collection/{guild.id}/{user.id}#", inline=False)
                 embed.set_author(name=row['name'], icon_url=row['img_url'])
                 await message.channel.send(embed=embed)
 
