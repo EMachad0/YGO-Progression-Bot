@@ -3,8 +3,8 @@ from discord.ext import commands
 
 from notebooks import db
 
-SERVER_QUERY = "insert into discord_server values (%s, %s, %s, %s) on conflict (server_cod)" \
-               "do update set name = %s, img_url = %s, settings = %s where discord_server.server_cod=%s"
+SERVER_QUERY = "insert into discord_server values (%s, %s, %s, NULL) on conflict (server_cod)" \
+               "do update set name = %s, img_url = %s where discord_server.server_cod=%s"
 SERVER_SELECT = "select * from discord_server where server_cod=%s"
 SERVER_DROP = "delete from discord_server where server_cod=%s;"
 
@@ -19,8 +19,7 @@ class ServerData(commands.Cog):
             return
         if message.content.startswith('$new_game'):
             db.make_query(SERVER_DROP, [guild.id])
-            settings = " ".join(message.content.split()[1:])
-            values = (guild.id, guild.name, str(guild.icon_url), settings, guild.name, str(guild.icon_url), settings, guild.id)
+            values = (guild.id, guild.name, str(guild.icon_url), guild.name, str(guild.icon_url), guild.id)
             db.make_query(SERVER_QUERY, values)
             await message.channel.send("It's time to D-D-D-D-D-D-D-D-D-D Duel")
             
