@@ -43,6 +43,7 @@ class PackSimulator(commands.Cog):
             player = db.make_select(PLAYER_SELECT, values)
             if len(player) == 0:
                 await message.channel.send("You're Not a player")
+                await message.add_reaction('❌')
                 return
             channel = message.channel if config_dao.get_config(guild.id, "private_pack") == "False" else user
             player = player[0]['player_cod']
@@ -52,6 +53,7 @@ class PackSimulator(commands.Cog):
             soma = sum(op['quantity'] for op in openings)
             if soma == 0:
                 await channel.send("You don't have any packs to open!")
+                await message.add_reaction('❌')
                 return
             if soma < quantity:
                 await channel.send(f"Opening all available {soma} packs!")
@@ -88,6 +90,7 @@ class PackSimulator(commands.Cog):
                 
             collection_insert = COLLECTION_INSERT.replace("(x)", ", ".join(["(%s, %s)"] * (len(collection_values)//2)))
             db.make_query(collection_insert, collection_values)
+            await message.add_reaction('✅')
 
 
 def setup(bot):
