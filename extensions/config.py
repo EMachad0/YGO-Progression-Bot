@@ -15,11 +15,11 @@ class ServerData(commands.Cog):
         if guild is None or message.author == self.client.user:
             return
         if user.guild_permissions.administrator:
-            if message.content.startswith('$set_config'):
-                if len(params != 3):
+            if message.content.startswith('$config'):
+                if len(params) != 3:
                     return
                 config, value = params[1:]
-                if config_dao.validate(config, value):
+                if config_dao.validate(config):
                     config_dao.set_config(guild.id, config, value)
                     await message.add_reaction('✅')
                 else:

@@ -6,11 +6,11 @@ SERVER_SELECT = "select settings from discord_server where server_cod=%s;"
 SERVER_UPDATE = "update discord_server set settings = %s where server_cod=%s;"
 
 
-CONFIGS = {"private_pack":bool}
+CONFIGS = {"private_pack"}
 
 
-def validate(config, value):
-    return config in CONFIGS and isinstance(value, (CONFIGS[config]))
+def validate(config):
+    return config in CONFIGS
 
 
 def get_all_config(server_cod):

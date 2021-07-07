@@ -5,6 +5,7 @@ from discord.ext import commands
 client = commands.Bot(command_prefix='?', description="YGOPROGBOT")
 
 startup_extensions = [
+    'config',
     'pack_simulator',
     'server_data', 'user_data',
     'openings'
