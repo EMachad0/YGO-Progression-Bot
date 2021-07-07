@@ -4,6 +4,7 @@ from discord import File
 from discord.ext import commands
 
 from notebooks import db, pack_opener
+from notebooks.dao import config_dao
 from notebooks.concat_images import concat_images
 
 PACK_QUERY = "select pull_cod, cod_img, rarity from " \
@@ -43,18 +44,20 @@ class PackSimulator(commands.Cog):
             if len(player) == 0:
                 await message.channel.send("You're Not a player")
                 return
+            channel = message.channel if config_dao.get_config(guild.id, "private_pack") == "False" else user
             player = player[0]['player_cod']
             quantity = int(params[1]) if params[1] else 1
             openings = db.make_select(OPENING_SELECT, [player])
             
             soma = sum(op['quantity'] for op in openings)
             if soma == 0:
-                await message.channel.send("You don't have any packs to open!")
+                await channel.send("You don't have any packs to open!")
                 return
             if soma < quantity:
-                await message.channel.send(f"Opening all available {soma} packs!")
+                await channel.send(f"Opening all available {soma} packs!")
             else:
-                await message.channel.send("Opening...")
+                await channel.send("Opening...")
+            
             
             collection_values = []
             cards = []
@@ -78,10 +81,10 @@ class PackSimulator(commands.Cog):
                     if len(cards) < 9*PACKS_PER_IMAGE:
                         cards += pack
                     else:
-                        await send_pack_image(message.channel, cards)
+                        await send_pack_image(channel, cards)
                         cards = pack
             if len(cards) > 0:
-                await send_pack_image(message.channel, cards)
+                await send_pack_image(channel, cards)
                 
             collection_insert = COLLECTION_INSERT.replace("(x)", ", ".join(["(%s, %s)"] * (len(collection_values)//2)))
             db.make_query(collection_insert, collection_values)
