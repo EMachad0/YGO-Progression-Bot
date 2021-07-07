@@ -98,8 +98,4 @@ def setup(bot):
     bot.add_cog(PackSimulator(bot))
     
 if __name__ == "__main__":
-    sc = db.make_select(PACK_QUERY, ['LOB'])
-    cp = pack_opener.get_card_pool(sc)
-    pk = pack_opener.get_random_pack(cp)
-    val = sum(((6, c['pull_cod']) for c in pk), ())
-    db.make_query(COLLECTION_INSERT, val)
+    pass
