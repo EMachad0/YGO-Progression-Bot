@@ -3,7 +3,7 @@ from io import BytesIO
 from discord import File
 from discord.ext import commands
 
-from notebooks import db, pack_opener
+from notebooks import db, pack_opener, images
 from notebooks.dao import config_dao
 from notebooks.concat_images import concat_images
 
@@ -19,8 +19,10 @@ PACKS_PER_IMAGE = 5
 
 
 async def send_pack_image(channel, pack):
+    for card in pack:
+        images.get_img(card['cod_img'])
+        images.get_img_small(card['cod_img'])
     paths = [f"data/card_images_small/{card['cod_img']}.jpg" for card in pack]
-    # print(paths)
     with BytesIO() as image_binary:
         concat_images(paths, shape=(len(paths)//9, 9)).save(image_binary, 'JPEG')
         image_binary.seek(0)
@@ -59,7 +61,6 @@ class PackSimulator(commands.Cog):
                 await channel.send(f"Opening all available {soma} packs!")
             else:
                 await channel.send("Opening...")
-            
             
             collection_values = []
             cards = []
