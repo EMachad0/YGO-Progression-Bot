@@ -3,6 +3,7 @@ from discord.ext import commands
 from notebooks import db
 
 PLAYER_SELECT = "select player_cod from player p join discord_user du on du.user_cod = p.user_cod where server_cod=%s"
+SET_SELECT = "select set_cod from set;"
 INSERT_OPENING = "insert into opening values (x) " \
                  "on conflict (set_cod, player_cod) do " \
                  "update set quantity=opening.quantity+%s;"
@@ -12,6 +13,8 @@ class UserData(commands.Cog):
     
     def __init__(self, client):
         self.client = client
+        sets = db.make_select(SET_SELECT, [])
+        self.__sets = set(s['set_cod'] for s in sets)
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -26,6 +29,9 @@ class UserData(commands.Cog):
                 who = [(" ".join(i.split("#")[:-1]), i.split("#")[-1]) for i in params[3:] if i is not None]
                 if set_cod is None:
                     await message.channel.send("No set_cod! ex = LOB")
+                    return
+                if set_cod not in self.__sets:
+                    await message.channel.send("Invalid set_cod! ex = LOB")
                     return
                 if quantity is None:
                     await message.channel.send("No quantity! ex = 36")
