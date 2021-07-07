@@ -1,7 +1,5 @@
 from discord import Embed
 from discord.ext import commands
-from psycopg2 import IntegrityError
-
 
 from notebooks import db
 
