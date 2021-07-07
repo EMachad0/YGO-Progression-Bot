@@ -20,7 +20,7 @@ class UserData(commands.Cog):
     async def on_message(self, message):
         user = message.author
         guild = message.guild
-        if message.author == self.client.user:
+        if guild is None or message.author == self.client.user:
             return
         if message.content.startswith('$enter'):
             values = (user.id, user.name, user.discriminator, str(user.avatar_url), user.name, user.discriminator, str(user.avatar_url), user.id)

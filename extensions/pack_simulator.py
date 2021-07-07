@@ -35,7 +35,7 @@ class PackSimulator(commands.Cog):
         user = message.author
         guild = message.guild
         params = message.content.split() + [None] * 5
-        if message.author == self.client.user:
+        if guild is None or message.author == self.client.user:
             return
         if message.content.startswith('$pack'):
             values = (user.id, guild.id)

@@ -15,7 +15,7 @@ class ServerData(commands.Cog):
     @commands.Cog.listener()
     async def on_message(self, message):
         guild = message.guild
-        if message.author == self.client.user:
+        if guild is None or message.author == self.client.user:
             return
         if message.content.startswith('$new_game'):
             db.make_query(SERVER_DROP, [guild.id])

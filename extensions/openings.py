@@ -18,7 +18,7 @@ class UserData(commands.Cog):
         user = message.author
         guild = message.guild
         params = message.content.split() + [None] * 5
-        if message.author == self.client.user:
+        if guild is None or message.author == self.client.user:
             return
         if user.guild_permissions.administrator:
             if message.content.startswith('$give_pack'):
