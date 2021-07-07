@@ -7,8 +7,7 @@ from notebooks import db
 
 USER_QUERY = "insert into discord_user values (%s, %s, %s, %s) on conflict (user_cod)" \
                "do update set name = %s, discriminator = %s, img_url = %s where discord_user.user_cod=%s"
-PLAYER_QUERY = "insert into player values (default, %s, %s)"
-
+PLAYER_INSERT = "insert into player values (default, %s, %s) on conflict do nothing;"
 PLAYER_SELECT = "select * from player p join discord_user du on du.user_cod = p.user_cod where p.user_cod=%s and server_cod=%s;"
 PLAYER_DROP = "delete from player where user_cod=%s and server_cod=%s;"
 
@@ -26,11 +25,8 @@ class UserData(commands.Cog):
             values = (user.id, user.name, user.discriminator, str(user.avatar_url), user.name, user.discriminator, str(user.avatar_url), user.id)
             db.make_query(USER_QUERY, values)
             values = (user.id, guild.id)
-            try:
-                db.make_query(PLAYER_QUERY, values)
-                await message.add_reaction('✅')
-            except IntegrityError:
-                await message.channel.send("Already in game!")
+            db.make_query(PLAYER_INSERT, values)
+            await message.add_reaction('✅')
                 
         if message.content.startswith('$exit'):
             db.make_query(PLAYER_DROP, (user.id, guild.id))
