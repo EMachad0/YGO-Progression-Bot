@@ -9,16 +9,19 @@ from notebooks.concat_images import concat_images
 PACK_QUERY = "select pull_cod, cod_img, rarity from " \
              "(select card_cod, cod_img from card) c join" \
              "(select card_cod, pull_cod, rarity from pull where set_cod=%s) p on c.card_cod = p.card_cod;"
-OPENING_SELECT = "select set_cod, quantity from opening where player_cod=%s;"
-COLLECTION_INSERT = "insert into collection(player_cod, pull_cod) values" \
-                    "(%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s), (%s, %s);"
+OPENING_SELECT = "select open_cod, set_cod, quantity from opening where player_cod=%s;"
+OPENING_UPDATE = "update opening set quantity = %s where open_cod=%s;"
+COLLECTION_INSERT = "insert into collection(player_cod, pull_cod) values (x);"
 PLAYER_SELECT = "select player_cod from player where user_cod=%s and server_cod=%s;"
+
+PACKS_PER_IMAGE = 5
 
 
 async def send_pack_image(channel, pack):
     paths = [f"data/card_images_small/{card['cod_img']}.jpg" for card in pack]
+    # print(paths)
     with BytesIO() as image_binary:
-        concat_images(paths).save(image_binary, 'JPEG')
+        concat_images(paths, shape=(len(paths)//9, 9)).save(image_binary, 'JPEG')
         image_binary.seek(0)
         await channel.send(file=File(fp=image_binary, filename='image.jpg'))
 
@@ -52,7 +55,9 @@ class PackSimulator(commands.Cog):
                 await message.channel.send(f"Opening all available {soma} packs!")
             else:
                 await message.channel.send("Opening...")
-                
+            
+            collection_values = []
+            cards = []
             for op in openings:
                 if quantity == 0:
                     break
@@ -64,12 +69,22 @@ class PackSimulator(commands.Cog):
                 card_pool = pack_opener.get_card_pool(set_cards)
                 
                 getting = min(quantity, op['quantity'])
+                db.make_query(OPENING_UPDATE, [op['quantity']-getting, op['open_cod']])
                 quantity -= getting
+                
                 for _ in range(getting):
                     pack = pack_opener.get_random_pack(card_pool)
-                    await send_pack_image(message.channel, pack)
-                    values = sum(((player, c['pull_cod']) for c in pack), ())
-                    db.make_query(COLLECTION_INSERT, values)
+                    collection_values += sum(([player, c['pull_cod']] for c in pack), [])
+                    if len(cards) < 9*PACKS_PER_IMAGE:
+                        cards += pack
+                    else:
+                        await send_pack_image(message.channel, cards)
+                        cards = pack
+            if len(cards) > 0:
+                await send_pack_image(message.channel, cards)
+                
+            collection_insert = COLLECTION_INSERT.replace("(x)", ", ".join(["(%s, %s)"] * (len(collection_values)//2)))
+            db.make_query(collection_insert, collection_values)
 
 
 def setup(bot):
