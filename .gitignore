@@ -489,4 +489,5 @@ fabric.properties
 *.env
 .vscode
 
-data/
+/data/card_images/*
+/data/card_images_small/*
