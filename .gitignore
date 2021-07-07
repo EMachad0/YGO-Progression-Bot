@@ -488,3 +488,5 @@ fabric.properties
 
 *.env
 .vscode
+
+data/
