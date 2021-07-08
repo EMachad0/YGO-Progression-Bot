@@ -6,7 +6,7 @@ SERVER_SELECT = "select settings from discord_server where server_cod=%s;"
 SERVER_UPDATE = "update discord_server set settings = %s where server_cod=%s;"
 
 
-CONFIGS = {"private_pack"}
+CONFIGS = {"private_pack", "ban_list"}
 
 
 def validate(config):
