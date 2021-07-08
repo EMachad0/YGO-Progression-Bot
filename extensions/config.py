@@ -24,8 +24,8 @@ class ServerData(commands.Cog):
                 if config_dao.validate(config):
                     config_dao.set_config(guild.id, config, value)
                     await message.add_reaction('✅')
-                    return
-        await message.add_reaction('❌')
+                else:
+                    await message.add_reaction('❌')
 
 
 def setup(bot):
