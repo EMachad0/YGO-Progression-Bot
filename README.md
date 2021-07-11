@@ -47,32 +47,75 @@ Hovewer, currently the project has monetary limitations, I can't pay for the ser
 
 # User Guide
 
-To do
+## Bot
+
+First of all, Add the [Bot](https://discord.com/api/oauth2/authorize?client_id=859241519781642251&permissions=59456&scope=bot) to your server
+
+As admin, configure which channels the bot has access to then send the following message:
+```
+$new_game
+```
+This will register a game in your server.
+
+at any point you can finish the game with following comand:
+```
+$end_game
+```
+Beware, sending *end_game* delets **all** data, including player's collection. 
+
+Now every player who wants to partipate can join with: 
+```
+$enter
+```
+
+And players can open packs with the *pack* command,
+```
+$pack 7
+```
+Here the 7 is the number of packs to open, passsing no number will open only 1 pack.
+This can take a while depending on the amount of cached imgs the bot has, however the bot will respond with *"Opening..."* to ensure you it's working correctly.
+Also the bot tries to reduce the amount of flooding by grouping maximum 5 packs per image.
+After running the command, all shown cards will be automatically be added into the player collection.
+
+However, to open packs, players need to have available packs.
+
+A player can see their available packs and collection url using:
+```
+$status
+```
+
+The admin needs to distribute packs to the players, using *give_pack* and the set code:
+```
+$give_pack LOB
+```
+Here *LOB* is the code for *Legend of Blue Eyes*, you can easily find set cods by searching the sets in [Yugipedia](yugipedia.com).
+If needed, the command suports an an arbitrary number of user names, so you can give specific packs to specific players:
+```
+$give_pack LOB @player1 @player2
+```
+
+The command *give_card* has yet to be implemented.
+
+### Configs
+
+Configs are key words to make so the admim can customize the game and implement the format he considers the best, like so:
+```
+$config ban_list May 2002
+```
+Here, *ban_list* is the key while *May 2002* is the value, this comand is setting the server banlist to the [May 2002](https://yugipedia.com/wiki/May_2002_Lists_(TCG)) lists.
+
+currently supported configs:
+|Key|Suported Values|Info|Default Behavior|
+|--|--|
+|ban_list|"Month Year" of any official banlist|Let admin set the deck builder banlist|No ban list|
+|private_pack|"True"|*$pack* response is sent via DM|*$pack* response is sent on the channel of the command|
+
+Passing an invalid key will do nothing while passing a invalid value will change the key to it's default behavior.
+
+### Configurations
+
 
 # Dev Guide
-
-To do
-
-auto generated project setup
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
