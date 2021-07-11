@@ -42,7 +42,7 @@ class UserData(commands.Cog):
                 openings = db.make_select(OPENING_SELECT, [row['player_cod']])
                 to_open = "\n".join(f"{op['set_cod']}: {op['quantity']}" for op in openings) if len(openings) > 0 else "Nothing!"
                 embed.add_field(name='Packs to open:', value=to_open, inline=False)
-                embed.add_field(name='Collection:', value=f"https://ygo-prog-web.herokuapp.com/collection/{guild.id}/{user.id}#", inline=False)
+                embed.add_field(name='Collection:', value=f"https://ygo-prog-web-front.herokuapp.com/#/collection/{guild.id}/{user.id}#", inline=False)
                 embed.set_author(name=row['name'], icon_url=row['img_url'])
                 await message.channel.send(embed=embed)
 
