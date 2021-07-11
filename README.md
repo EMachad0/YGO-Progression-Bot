@@ -112,7 +112,7 @@ Here, *ban_list* is the key while *May 2002* is the value, this comand is settin
 
 currently supported configs:
 |Key|Suported Values|Info|Default Behavior|
-|--|--|
+|--|--|--|--|
 |ban_list|"Month Year" of any official banlist|Let admin set the deck builder banlist|No ban list|
 |private_pack|"True"|*$pack* response is sent via DM|*$pack* response is sent on the channel of the command|
 
