@@ -15,7 +15,7 @@
   •
   <a href="#user-guide">User Guide</a>
   •
-  <a href="#credits">Creditos</a>
+  <a href="#credits">Credits</a>
   •
   <a href="#license">License</a>
 </p>
