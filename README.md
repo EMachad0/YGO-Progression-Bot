@@ -136,7 +136,7 @@ That is it, there is no magic here, the ui should be intuitive enough, but you c
 
 Credit where credit is due
 
-Special Thanks for all my friends who helped on the development, specialy [Igor](https://github.com/IgorFroehner), [Joao](https://github.com/joao-frohlich) and [Felipe](https://github.com/Markhyz)
+Special Thanks for all my friends who helped on the development, specialy [Igor](https://github.com/IgorFroehner), [Joao](https://github.com/joao-frohlich) and [Felipe](https://github.com/Markhyz).
 
 Thanks to [Cimooo](https://www.youtube.com/channel/UCrEMDvUyGV1p66Vf5P0O1pg) for creating the Progression Series and being the inspiration of this project.
 
