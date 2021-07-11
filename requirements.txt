@@ -4,7 +4,6 @@ attrs
 chardet
 discord
 discord.py
-idna
 multidict
 requests
 typing-extensions
