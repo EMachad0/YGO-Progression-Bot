@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img style="width: 50%" src="https://github.com/EMachad0/YGO-Prog-Web-Front/blob/main/src/assets/logo.png" alt="YGO-Prog-db">
+    <img style="width: 5px;" src="https://github.com/EMachad0/YGO-Prog-Web-Front/blob/main/src/assets/logo.png" alt="YGO-Prog-db">
   <br>
     YGO-Progression-Bot
   <br>
