@@ -121,9 +121,12 @@ Passing an invalid key will do nothing while passing a invalid value will change
 ## Web
 
 The Site will display only your entire collection, you can't add cards you haven't pull and those won't apear if you search for then.
+
 Also the cards may take a while to load depending on the size of your collection, don't panic if it looks stuck.
+
 Use the fields and Options to filter/sort and you can Drag/Drop or Right Click on cards to add/remove then from deck.
-That is it, there is no magic here, the ui should be intuitive enough, but u can message me any questions.
+
+That is it, there is no magic here, the ui should be intuitive enough, but you can message me any questions.
 
 # Dev Guide
 
