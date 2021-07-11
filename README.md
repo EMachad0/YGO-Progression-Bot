@@ -30,7 +30,7 @@ The project curently is divided into four applications:
 
 * [YGO-Progression-Web](https://github.com/EMachad0/YGO-Progression-Web): The bulk of the project, built using Vue.js, this site lets players see their collection, build a deck and export it to battle on their prefed Yu-Gi-Oh dueling system.
 
-* [YGO-Progression-Web-Back](https://github.com/EMachad0/YGO-Progression-Web-Back): The Back Bone of the project, this Flask/SQLAlchemy application exposes the card/set/banlist/player database for the site. 
+* [YGO-Progression-Web-Back](https://github.com/EMachad0/YGO-Progression-Web-Back): The Back Bone of the project, this Flask/SQLAlchemy application exposes the card/set/banlist/player database to the site. 
 
 * [YGO-Progression-db](https://github.com/EMachad0/YGO-Progression-db): The less exciting part of the project, scripts for getting and parsing yu-gi-oh data and adding those to the database for the others applications to use.
 
