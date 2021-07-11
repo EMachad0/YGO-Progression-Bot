@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-    <img src="https://github.com/EMachad0/YGO-Prog-Web-Front/blob/main/src/assets/logo.png" alt="YGO-Prog-db">
+    <img style="width: 50%" src="https://github.com/EMachad0/YGO-Prog-Web-Front/blob/main/src/assets/logo.png" alt="YGO-Prog-db">
   <br>
     YGO-Progression-Bot
   <br>
@@ -43,7 +43,13 @@ Hovewer, currently the project has monetary limitations, I can't pay for the ser
 **With the current server there is a limit of 10000 database lines, that's why there are many sets missing and a per server player limit.**
 (there exists more cards than database lines).
 
-[Buy me a Ko-fi](https://ko-fi.com/ygoprogressionbot)
+<h1 align="center">
+    <a href="https://ko-fi.com/ygoprogressionbot">
+      <img src="https://i.imgur.com/R2F5Os9.png" alt="[Buy me a Ko-fi]">
+    </a>
+</h1>
+
+You can also contribute by opening issues if you found any problem. Any pull request welcome.
 
 # User Guide
 
