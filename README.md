@@ -101,11 +101,11 @@ The admin needs to distribute packs to the players, using *give_pack* and the se
 ```
 $give_pack LOB 24
 ```
-Here *LOB* is the code for *Legend of Blue Eyes*, you can easily find set cods by searching the sets in [Yugipedia](yugipedia.com) and the 24 is the number of packs each player will recieve.
+Here *LOB* is the code for *Legend of Blue Eyes*, you can easily find set cods by searching the sets in [Yugipedia](yugipedia.com), and the *24* is the number of packs each player will recieve.
 Players need to open packs on their own with the *pack* command.
 If needed, the command supports an arbitrary number of usernames, so you can give specific packs to specific players:
 ```
-$give_pack LOB 5 @player1 @player2
+$give_pack MRD 5 @player1 @player2
 ```
 
 The command *give_card* has yet to be implemented.
