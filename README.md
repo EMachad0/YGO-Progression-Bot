@@ -41,7 +41,7 @@ This project was develop by a single Brazilian CS Student, while I don't expect 
 However, currently the project has monetary limitations, I can't pay for the servers this project runs on, that's why I need your contribution.
 
 **With the current server there is a limit of 10000 database lines, that's why there are many sets missing and a per server player limit.**
-(there exists more cards than database lines).
+(Currently only the first 5 sets are available) (there exists more cards than database lines).
 
 <h1 align="center">
     <a href="https://ko-fi.com/ygoprogressionbot">
@@ -57,7 +57,7 @@ Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) 
 
 ## Bot
 
-First, Add the [Bot](https://discord.com/api/oauth2/authorize?client_id=859241519781642251&permissions=59456&scope=bot) to your server
+First, Add the [Bot](https://discord.com/api/oauth2/authorize?client_id=859241519781642251&permissions=59456&scope=bot) to your server!
 
 As admin, configure which channels the bot has access to then send the following message:
 ```
