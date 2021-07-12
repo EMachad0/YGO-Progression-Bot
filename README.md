@@ -51,6 +51,8 @@ However, currently the project has monetary limitations, I can't pay for the ser
 
 You can also contribute by opening issues if you found any problem. Any pull request welcome.
 
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
+
 # User Guide
 
 ## Bot
@@ -102,6 +104,8 @@ $give_pack LOB @player1 @player2
 
 The command *give_card* has yet to be implemented.
 
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
+
 ### Bot Screenshot:
 <h1 align="center">
     <img src="/screenshots/discord_screenshot.png" alt="" width="30%">
@@ -133,6 +137,8 @@ Use the fields and Options to filter/sort, and you can Drag/Drop or Right Click 
 
 That is it, there is no magic here, the ui should be intuitive enough, but you can message me any questions.
 
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
+
 ### Web Screenshot:
 <h1 align="center" float="left">
     <img src="/screenshots/collection_screenshot.png" alt="" width="45%">
@@ -142,6 +148,8 @@ That is it, there is no magic here, the ui should be intuitive enough, but you c
 # Dev Guide
 
 (to do)
+
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
 
 # Credits
 
