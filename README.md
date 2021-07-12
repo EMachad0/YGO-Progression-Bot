@@ -61,7 +61,7 @@ First, Add the [Bot](https://discord.com/api/oauth2/authorize?client_id=85924151
 
 https://discord.com/api/oauth2/authorize?client_id=859241519781642251&permissions=59456&scope=bot
 
-As admin, configure which channels the bot has access to then send the following message:
+As admin, configure which channels the bot has access to, then send the following message:
 ```
 $new_game
 ```
