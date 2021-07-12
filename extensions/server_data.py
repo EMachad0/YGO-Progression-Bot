@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from notebooks import db
 
-SERVER_QUERY = "insert into discord_server values (%s, %s, %s, NULL) on conflict (server_cod)" \
+SERVER_QUERY = "insert into discord_server values (%s, %s, %s, '{}') on conflict (server_cod)" \
                "do update set name = %s, img_url = %s where discord_server.server_cod=%s"
 SERVER_SELECT = "select * from discord_server where server_cod=%s"
 SERVER_DROP = "delete from discord_server where server_cod=%s;"
