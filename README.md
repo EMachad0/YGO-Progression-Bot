@@ -81,8 +81,11 @@ And players can open packs with the *pack* command,
 $pack 7
 ```
 Here the 7 is the number of packs to open, passing no number will open only 1 pack.
+
 This can take a while depending on the amount of cached images the bot has, however the bot will respond with *"Opening..."* to ensure you it's working correctly.
+
 Also, the bot tries to reduce the amount of flooding by grouping maximum 5 packs per image.
+
 After running the command, all shown cards will be automatically be added into the player collection.
 
 However, to open packs, players need to have available packs.
@@ -119,11 +122,11 @@ $config ban_list May 2002
 ```
 Here, *ban_list* is the key while *May 2002* is the value, this command is setting the server banlist to the [May 2002](https://yugipedia.com/wiki/May_2002_Lists_(TCG)) lists.
 
-currently, supported configs:
-|Key|Supported Values|Info|Default Behavior|
-|--|--|--|--|
-|ban_list|"Month Year" of any official banlist|Let admin set the deck builder banlist|No ban list|
-|private_pack|"True"|*$pack* response is sent via DM|*$pack* response is sent on the channel of the command|
+Supported configs for now:
+|Key         |Supported Values                    |Info                                                  |Default Behavior               |
+|------------|------------------------------------|------------------------------------------------------|-------------------------------|
+|ban_list    |"Month Year" of any official banlist|Let admin set the deck builder banlist                |No ban list                    |
+|private_pack|"False"                             |*$pack* response is sent on the channel of the command|*$pack* response is sent via DM|
 
 Passing an invalid key will do nothing while passing a invalid value will change the key to it's default behavior.
 
