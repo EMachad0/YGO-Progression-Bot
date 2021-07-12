@@ -1,3 +1,5 @@
+import os
+
 from discord import Embed
 from discord.ext import commands
 
@@ -11,7 +13,7 @@ PLAYER_DROP = "delete from player where user_cod=%s and server_cod=%s;"
 OPENING_SELECT = "select * from opening where player_cod=%s and quantity > 0;"
 PLAYER_COUNT = "select count(*) from player where server_cod=%s;"
 
-MAX_PLAYER_COUNT = 0
+MAX_PLAYER_COUNT = os.environ['MAX_PLAYER_COUNT']
 
 
 class UserData(commands.Cog):
@@ -25,8 +27,8 @@ class UserData(commands.Cog):
         if guild is None or message.author == self.client.user:
             return
         if message.content.startswith('$enter'):
-            player_count = db.make_select(PLAYER_COUNT, [guild.id])[0]
-            if player_count == MAX_PLAYER_COUNT:
+            player_count = db.make_select(PLAYER_COUNT, [guild.id])[0]['count']
+            if player_count >= MAX_PLAYER_COUNT:
                 await message.channel.send("Player limit reached!")
                 return
             values = (user.id, user.name, user.discriminator, str(user.avatar_url), user.name, user.discriminator, str(user.avatar_url), user.id)
