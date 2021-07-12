@@ -81,8 +81,11 @@ And players can open packs with the *pack* command,
 $pack 7
 ```
 Here the 7 is the number of packs to open, passing no number will open only 1 pack.
+
 This can take a while depending on the amount of cached images the bot has, however the bot will respond with *"Opening..."* to ensure you it's working correctly.
+
 Also, the bot tries to reduce the amount of flooding by grouping maximum 5 packs per image.
+
 After running the command, all shown cards will be automatically be added into the player collection.
 
 However, to open packs, players need to have available packs.
