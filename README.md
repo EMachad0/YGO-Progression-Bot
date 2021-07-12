@@ -59,6 +59,8 @@ Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) 
 
 First, Add the [Bot](https://discord.com/api/oauth2/authorize?client_id=859241519781642251&permissions=59456&scope=bot) to your server!
 
+https://discord.com/api/oauth2/authorize?client_id=859241519781642251&permissions=59456&scope=bot
+
 As admin, configure which channels the bot has access to then send the following message:
 ```
 $new_game
