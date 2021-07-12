@@ -51,6 +51,8 @@ However, currently the project has monetary limitations, I can't pay for the ser
 
 You can also contribute by opening issues if you found any problem. Any pull request welcome.
 
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
+
 # User Guide
 
 ## Bot
@@ -102,6 +104,13 @@ $give_pack LOB @player1 @player2
 
 The command *give_card* has yet to be implemented.
 
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
+
+### Bot Screenshot:
+<h1 align="center">
+    <img src="/screenshots/discord_screenshot.png" alt="" width="30%">
+</h1>
+
 ### Configs
 
 Configs are keywords to make so the admin can customize the game and implement the format he considers the best, like so:
@@ -118,10 +127,6 @@ currently, supported configs:
 
 Passing an invalid key will do nothing while passing a invalid value will change the key to it's default behavior.
 
-<h1 align="center">
-    <img src="/screenshots/discord_screenshot.png" alt="">
-</h1>
-
 ## Web
 
 The Site will display only your entire collection, you can't add cards you haven't pull and those won't appear if you search for then.
@@ -132,14 +137,19 @@ Use the fields and Options to filter/sort, and you can Drag/Drop or Right Click 
 
 That is it, there is no magic here, the ui should be intuitive enough, but you can message me any questions.
 
-<h1 align="center">
-    <img src="/screenshots/collection_screenshot.png" alt="">
-    <img src="/screenshots/deck_builder_screenshot.png" alt="">
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
+
+### Web Screenshot:
+<h1 align="center" float="left">
+    <img src="/screenshots/collection_screenshot.png" alt="" width="45%">
+    <img src="/screenshots/deck_builder_screenshot.png" alt="" width="45%">
 </h1>
 
 # Dev Guide
 
 (to do)
+
+Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
 
 # Credits
 
