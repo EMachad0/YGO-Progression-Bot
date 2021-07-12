@@ -41,7 +41,7 @@ class ServerData(commands.Cog):
                     row = row[0]
                     player_count = db.make_select(PLAYER_COUNT, [guild.id])[0]['count']
                     embed = Embed(title='YGO Progression Game!', colour=0xFF0000)
-                    embed.add_field(name='Players:', value=player_count / int(os.environ['MAX_PLAYER_COUNT']))
+                    embed.add_field(name='Players:', value=f"{player_count} / {os.environ['MAX_PLAYER_COUNT']}")
                     embed.add_field(name='Settings:', value=row['settings'])
                     embed.set_author(name=row['name'], icon_url=row['img_url'])
                     await message.channel.send(embed=embed)
