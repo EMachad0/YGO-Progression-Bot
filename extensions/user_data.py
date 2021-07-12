@@ -11,7 +11,7 @@ PLAYER_DROP = "delete from player where user_cod=%s and server_cod=%s;"
 OPENING_SELECT = "select * from opening where player_cod=%s and quantity > 0;"
 PLAYER_COUNT = "select count(*) from player where server_cod=%s;"
 
-MAX_PLAYER_COUNT = 8
+MAX_PLAYER_COUNT = 3
 
 
 class UserData(commands.Cog):
