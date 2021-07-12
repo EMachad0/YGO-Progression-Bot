@@ -119,11 +119,11 @@ $config ban_list May 2002
 ```
 Here, *ban_list* is the key while *May 2002* is the value, this command is setting the server banlist to the [May 2002](https://yugipedia.com/wiki/May_2002_Lists_(TCG)) lists.
 
-currently, supported configs:
-|Key|Supported Values|Info|Default Behavior|
-|--|--|--|--|
-|ban_list|"Month Year" of any official banlist|Let admin set the deck builder banlist|No ban list|
-|private_pack|"True"|*$pack* response is sent via DM|*$pack* response is sent on the channel of the command|
+Supported configs for now:
+|Key         |Supported Values                    |Info                                                  |Default Behavior               |
+|------------|------------------------------------|------------------------------------------------------|-------------------------------|
+|ban_list    |"Month Year" of any official banlist|Let admin set the deck builder banlist                |No ban list                    |
+|private_pack|"False"                             |*$pack* response is sent on the channel of the command|*$pack* response is sent via DM|
 
 Passing an invalid key will do nothing while passing a invalid value will change the key to it's default behavior.
 
