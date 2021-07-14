@@ -2,6 +2,7 @@ from io import BytesIO
 
 from discord import File
 from discord.ext import commands
+from discord.ext.commands.errors import BadArgument
 
 from notebooks import pack_opener, images, config_utils
 from notebooks.concat_images import concat_images
@@ -25,61 +26,61 @@ class PackSimulator(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        user = message.author
-        guild = message.guild
-        params = message.content.split() + [None] * 5
-        if guild is None or message.author == self.client.user:
+    @commands.command()
+    async def pack(self, ctx, quantity: int = 1):
+        player = player_dao.get_player_by_user_server(ctx.author.id, ctx.guild.id)
+        if player is None:
+            await ctx.send("You're Not a player")
+            await ctx.message.add_reaction('❌')
             return
-        if message.content.startswith('$pack'):
-            player = player_dao.get_player_by_user_server(user.id, guild.id)
-            if player is None:
-                await message.channel.send("You're Not a player")
-                await message.add_reaction('❌')
-                return
-            channel = message.channel if config_utils.get_config(guild.id, "private_pack") == "False" else user
-            quantity = int(params[1]) if params[1] else 1
-            openings = opening_dao.get_player_available_openings(player.player_cod)
+        channel = ctx if config_utils.get_config(ctx.guild.id, "private_pack") == "False" else ctx.author
+        openings = opening_dao.get_player_available_openings(player.player_cod)
 
-            soma = sum(op.quantity for op in openings)
-            if soma == 0:
-                await channel.send("You don't have any packs to open!")
-                await message.add_reaction('❌')
-                return
-            if soma < quantity:
-                await channel.send(f"Opening all available {soma} packs!")
-            else:
-                await channel.send("Opening...")
+        soma = sum(op.quantity for op in openings)
+        if soma == 0:
+            await channel.send("You don't have any packs to open!")
+            await ctx.message.add_reaction('❌')
+            return
+        if soma < quantity:
+            await channel.send(f"Opening all available {soma} packs!")
+        else:
+            await channel.send("Opening...")
 
-            collection_values = []
-            cards = []
-            for op in openings:
-                if quantity == 0:
-                    break
-                if op.quantity == 0:
-                    continue
+        collection_values = []
+        cards = []
+        for op in openings:
+            if quantity == 0:
+                break
+            if op.quantity == 0:
+                continue
 
-                set_cards = pull_dao.get_pull_values(op.set_cod)
-                card_pool = pack_opener.get_card_pool(set_cards)
+            set_cards = pull_dao.get_pull_values(op.set_cod)
+            card_pool = pack_opener.get_card_pool(set_cards)
 
-                getting = min(quantity, op.quantity)
-                opening_dao.update_opening(op.open_cod, {'quantity': op.quantity - getting})
-                quantity -= getting
+            getting = min(quantity, op.quantity)
+            opening_dao.update_opening(op.open_cod, {'quantity': op.quantity - getting})
+            quantity -= getting
 
-                for _ in range(getting):
-                    pack = pack_opener.get_random_pack(card_pool)
-                    collection_values += [{'player_cod': player.player_cod, 'pull_cod': c.pull_cod} for c in pack]
-                    if len(cards) < 9 * PACKS_PER_IMAGE:
-                        cards += pack
-                    else:
-                        await send_pack_image(channel, cards)
-                        cards = pack
-            if len(cards) > 0:
-                await send_pack_image(channel, cards)
+            for _ in range(getting):
+                pack = pack_opener.get_random_pack(card_pool)
+                collection_values += [{'player_cod': player.player_cod, 'pull_cod': c.pull_cod} for c in pack]
+                if len(cards) < 9 * PACKS_PER_IMAGE:
+                    cards += pack
+                else:
+                    await send_pack_image(channel, cards)
+                    cards = pack
+        if len(cards) > 0:
+            await send_pack_image(channel, cards)
 
-            collection_dao.insert_collection(collection_values)
-            await message.add_reaction('✅')
+        collection_dao.insert_collection(collection_values)
+        await ctx.message.add_reaction('✅')
+
+    @pack.error
+    async def config_error(self, ctx, error):
+        if isinstance(error, BadArgument):
+            await ctx.message.add_reaction('❌')
+        else:
+            raise error
 
 
 def setup(bot):

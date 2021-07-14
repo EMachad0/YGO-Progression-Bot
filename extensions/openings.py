@@ -1,4 +1,6 @@
+import discord
 from discord.ext import commands
+from discord.ext.commands.errors import *
 
 from notebooks.dao import player_dao, set_dao, opening_dao
 
@@ -10,43 +12,40 @@ class UserData(commands.Cog):
         sets = set_dao.get_all_sets()
         self.__sets = set(s.set_cod for s in sets)
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        user = message.author
-        guild = message.guild
-        params = message.content.split()
-        if guild is None or message.author == self.client.user:
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def give_pack(self, ctx, quantity: int, set_cod=None, *p_args: discord.Member):
+        if set_cod is None:
+            await ctx.send("No set_cod! ex = LOB")
             return
-        if user.guild_permissions.administrator:
-            if message.content.startswith('$give_pack'):
-                set_cod, quantity = params[1:3]
-                if set_cod is None:
-                    await message.channel.send("No set_cod! ex = LOB")
-                    return
-                if set_cod not in self.__sets:
-                    await message.channel.send("Invalid set_cod! ex = LOB")
-                    return
-                if quantity is None:
-                    await message.channel.send("No quantity! ex = 36")
+        if set_cod not in self.__sets:
+            await ctx.send("Invalid set_cod! ex = LOB")
+            return
+
+        valid_players = player_dao.get_players_by_server(ctx.guild.id)
+        if len(valid_players) == 0:
+            await ctx.send("No player found!")
+            return
+        if len(p_args) != 0:
+            users = {p.user_cod for p in valid_players}
+            for user in p_args:
+                if user.id not in users:
+                    await ctx.send(f"{user.display_name} is not a player!")
                     return
 
-                players = player_dao.get_players_by_server(guild.id)
-                players = {p.user_cod: p.player_cod for p in players}
-                if len(params) > 3:
-                    ids = [int(w[3:-1]) for w in params[3:] if w is not None]
-                    players = [players[int(user_id)] for user_id in ids if int(user_id) in players]
-                else:
-                    players = [players[k] for k in players]
-                if len(players) == 0:
-                    await message.channel.send("No player found!")
-                    return
+        ids = {p.id for p in p_args}
+        players = {p.player_cod for p in valid_players if len(ids) == 0 or p.user_cod in ids}
 
-                values = [{'set_cod': set_cod, 'player_cod': p, 'quantity': quantity} for p in players]
-                opening_dao.insert_opening(values, quantity)
-                await message.add_reaction('✅')
+        values = [{'set_cod': set_cod, 'player_cod': p, 'quantity': quantity} for p in players]
+        opening_dao.insert_opening(values, quantity)
+        await ctx.message.add_reaction('✅')
 
-            if message.content.startswith('$give_card'):
-                pass
+    @give_pack.error
+    async def openings_error(self, ctx, error):
+        if isinstance(error, (MissingRequiredArgument, MissingPermissions, MemberNotFound, BadArgument)):
+            await ctx.message.add_reaction('❌')
+        else:
+            raise error
 
 
 def setup(bot):

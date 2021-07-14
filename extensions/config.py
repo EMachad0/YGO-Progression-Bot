@@ -1,4 +1,5 @@
 from discord.ext import commands
+from discord.ext.commands import MissingRequiredArgument, MissingPermissions
 
 from notebooks import config_utils
 
@@ -7,25 +8,21 @@ class ServerData(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        user = message.author
-        guild = message.guild
-        params = message.content.split()
-        if guild is None or message.author == self.client.user:
-            return
-        if user.guild_permissions.administrator:
-            if message.content.startswith('$config'):
-                if len(params) < 3:
-                    await message.add_reaction('❌')
-                    return
-                config = params[1]
-                value = " ".join(params[2:])
-                if config_utils.validate(config):
-                    config_utils.update_config(guild.id, config, value)
-                    await message.add_reaction('✅')
-                else:
-                    await message.add_reaction('❌')
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def config(self, ctx, key, *, value):
+        if config_utils.validate(key):
+            config_utils.update_config(ctx.guild.id, key, value)
+            await ctx.message.add_reaction('✅')
+        else:
+            await ctx.message.add_reaction('❌')
+
+    @config.error
+    async def config_error(self, ctx, error):
+        if isinstance(error, (MissingRequiredArgument, MissingPermissions)):
+            await ctx.message.add_reaction('❌')
+        else:
+            raise error
 
 
 def setup(bot):
