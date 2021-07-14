@@ -7,6 +7,7 @@ class Set(db.Model):
     set_name = db.Column(db.String(100))
     num_of_cards = db.Column(db.Integer)
     release_date = db.Column(db.Date)
+    type_cod = db.Column(db.Integer, db.ForeignKey('set_type.set_type_cod'))
 
 
 def get_all_sets():
