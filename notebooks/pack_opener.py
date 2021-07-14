@@ -25,7 +25,7 @@ def get_random_pack(card_pool):
 def get_card_pool(set_cards):
     card_pool = {}
     for c in set_cards:
-        if c['rarity'] not in card_pool:
-            card_pool[c['rarity']] = []
-        card_pool[c['rarity']].append(c)
+        if c.rarity not in card_pool:
+            card_pool[c.rarity] = []
+        card_pool[c.rarity].append(c)
     return card_pool

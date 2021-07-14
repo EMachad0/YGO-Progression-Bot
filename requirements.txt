@@ -10,3 +10,4 @@ typing-extensions
 yarl
 psycopg2-binary
 Pillow
+sqlalchemy
