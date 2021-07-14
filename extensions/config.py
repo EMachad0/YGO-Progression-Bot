@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-from notebooks.dao import config_dao
+from notebooks import config_utils
 
 
 class ServerData(commands.Cog):
@@ -21,8 +21,8 @@ class ServerData(commands.Cog):
                     return
                 config = params[1]
                 value = " ".join(params[2:])
-                if config_dao.validate(config):
-                    config_dao.set_config(guild.id, config, value)
+                if config_utils.validate(config):
+                    config_utils.update_config(guild.id, config, value)
                     await message.add_reaction('✅')
                 else:
                     await message.add_reaction('❌')
@@ -30,7 +30,3 @@ class ServerData(commands.Cog):
 
 def setup(bot):
     bot.add_cog(ServerData(bot))
-
-
-if __name__ == "__main__":
-    pass

@@ -3,17 +3,9 @@ from io import BytesIO
 from discord import File
 from discord.ext import commands
 
-from notebooks import db, pack_opener, images
-from notebooks.dao import config_dao
+from notebooks import pack_opener, images, config_utils
 from notebooks.concat_images import concat_images
-
-PACK_QUERY = "select pull_cod, cod_img, rarity from " \
-             "(select card_cod, cod_img from card) c join" \
-             "(select card_cod, pull_cod, rarity from pull where set_cod=%s) p on c.card_cod = p.card_cod;"
-OPENING_SELECT = "select open_cod, set_cod, quantity from opening where player_cod=%s;"
-OPENING_UPDATE = "update opening set quantity = %s where open_cod=%s;"
-COLLECTION_INSERT = "insert into collection(player_cod, pull_cod) values (x);"
-PLAYER_SELECT = "select player_cod from player where user_cod=%s and server_cod=%s;"
+from notebooks.dao import player_dao, opening_dao, pull_dao, collection_dao
 
 PACKS_PER_IMAGE = 5
 
@@ -24,7 +16,7 @@ async def send_pack_image(channel, pack):
         images.get_img_small(card['cod_img'])
     paths = [f"data/card_images_small/{card['cod_img']}.jpg" for card in pack]
     with BytesIO() as image_binary:
-        concat_images(paths, shape=(len(paths)//9, 9)).save(image_binary, 'JPEG')
+        concat_images(paths, shape=(len(paths) // 9, 9)).save(image_binary, 'JPEG')
         image_binary.seek(0)
         await channel.send(file=File(fp=image_binary, filename='image.jpg'))
 
@@ -32,7 +24,7 @@ async def send_pack_image(channel, pack):
 class PackSimulator(commands.Cog):
     def __init__(self, client):
         self.client = client
-        
+
     @commands.Cog.listener()
     async def on_message(self, message):
         user = message.author
@@ -41,18 +33,16 @@ class PackSimulator(commands.Cog):
         if guild is None or message.author == self.client.user:
             return
         if message.content.startswith('$pack'):
-            values = (user.id, guild.id)
-            player = db.make_select(PLAYER_SELECT, values)
-            if len(player) == 0:
+            player = player_dao.get_player_by_user_server(user.id, guild.id)
+            if player is None:
                 await message.channel.send("You're Not a player")
                 await message.add_reaction('❌')
                 return
-            channel = message.channel if config_dao.get_config(guild.id, "private_pack") == "False" else user
-            player = player[0]['player_cod']
+            channel = message.channel if config_utils.get_config(guild.id, "private_pack") == "False" else user
             quantity = int(params[1]) if params[1] else 1
-            openings = db.make_select(OPENING_SELECT, [player])
-            
-            soma = sum(op['quantity'] for op in openings)
+            openings = opening_dao.get_player_available_openings(player.player_cod)
+
+            soma = sum(op.quantity for op in openings)
             if soma == 0:
                 await channel.send("You don't have any packs to open!")
                 await message.add_reaction('❌')
@@ -61,41 +51,36 @@ class PackSimulator(commands.Cog):
                 await channel.send(f"Opening all available {soma} packs!")
             else:
                 await channel.send("Opening...")
-            
+
             collection_values = []
             cards = []
             for op in openings:
                 if quantity == 0:
                     break
-                if op['quantity'] == 0:
+                if op.quantity == 0:
                     continue
-                    
-                sett = op['set_cod']
-                set_cards = db.make_select(PACK_QUERY, [sett])
+
+                set_cards = pull_dao.get_pull_values(op.set_cod)
                 card_pool = pack_opener.get_card_pool(set_cards)
-                
-                getting = min(quantity, op['quantity'])
-                db.make_query(OPENING_UPDATE, [op['quantity']-getting, op['open_cod']])
+
+                getting = min(quantity, op.quantity)
+                opening_dao.update_opening(op.open_cod, {'quantity': op.quantity - getting})
                 quantity -= getting
-                
+
                 for _ in range(getting):
                     pack = pack_opener.get_random_pack(card_pool)
-                    collection_values += sum(([player, c['pull_cod']] for c in pack), [])
-                    if len(cards) < 9*PACKS_PER_IMAGE:
+                    collection_values += [{'player_cod': player.player_cod, 'pull_cod': c.pull_cod} for c in pack]
+                    if len(cards) < 9 * PACKS_PER_IMAGE:
                         cards += pack
                     else:
                         await send_pack_image(channel, cards)
                         cards = pack
             if len(cards) > 0:
                 await send_pack_image(channel, cards)
-                
-            collection_insert = COLLECTION_INSERT.replace("(x)", ", ".join(["(%s, %s)"] * (len(collection_values)//2)))
-            db.make_query(collection_insert, collection_values)
+
+            collection_dao.insert_collection(collection_values)
             await message.add_reaction('✅')
 
 
 def setup(bot):
     bot.add_cog(PackSimulator(bot))
-    
-if __name__ == "__main__":
-    pass

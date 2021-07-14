@@ -1,20 +1,14 @@
 from discord.ext import commands
 
-from notebooks import db
-
-PLAYER_SELECT = "select player_cod, user_cod from player where server_cod=%s"
-SET_SELECT = "select set_cod from set;"
-INSERT_OPENING = "insert into opening values (x) " \
-                 "on conflict (set_cod, player_cod) do " \
-                 "update set quantity=opening.quantity+%s;"
+from notebooks.dao import player_dao, set_dao, opening_dao
 
 
 class UserData(commands.Cog):
-    
+
     def __init__(self, client):
         self.client = client
-        sets = db.make_select(SET_SELECT, [])
-        self.__sets = set(s['set_cod'] for s in sets)
+        sets = set_dao.get_all_sets()
+        self.__sets = set(s.set_cod for s in sets)
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -36,30 +30,24 @@ class UserData(commands.Cog):
                     await message.channel.send("No quantity! ex = 36")
                     return
 
-                players = db.make_select(PLAYER_SELECT, [guild.id])
-                players = {p["user_cod"]: p["player_cod"] for p in players}
+                players = player_dao.get_players_by_server(guild.id)
+                players = {p.user_cod: p.player_cod for p in players}
                 if len(params) > 3:
                     ids = [int(w[3:-1]) for w in params[3:] if w is not None]
-                    players = [players[user_id] for user_id in ids if user_id in players]
+                    players = [players[int(user_id)] for user_id in ids if int(user_id) in players]
                 else:
                     players = [players[k] for k in players]
                 if len(players) == 0:
                     await message.channel.send("No player found!")
                     return
 
-                values = sum(([set_cod, p, quantity] for p in players), []) + [quantity]
-                insert_opening = INSERT_OPENING.replace("(x)", ", ".join(["(default, %s, %s, %s)"] * len(players)))
-                db.make_query(insert_opening, values)
+                values = [{'set_cod': set_cod, 'player_cod': p, 'quantity': quantity} for p in players]
+                opening_dao.insert_opening(values, quantity)
                 await message.add_reaction('✅')
-                
+
             if message.content.startswith('$give_card'):
                 pass
-            
 
 
 def setup(bot):
     bot.add_cog(UserData(bot))
-
-
-if __name__ == "__main__":
-    pass
