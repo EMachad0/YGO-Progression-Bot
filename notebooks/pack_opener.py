@@ -2,8 +2,8 @@ from random import choice, choices
 
 
 def get_common_type():
-    rarity = ['Common', 'Short Print']
-    odds = [29, 1]
+    rarity = ['Common', 'Short Print', 'Super Short Print']
+    odds = [57, 2, 1]
     return choices(rarity, weights=odds, k=1)[0]
 
 
