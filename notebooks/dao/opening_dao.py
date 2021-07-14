@@ -13,7 +13,6 @@ def insert_opening(values, quantity):
     ins = db.insert(Opening).values(values). \
         on_conflict_do_update(index_elements=[Opening.set_cod, Opening.player_cod],
                               set_={'quantity': Opening.quantity + quantity})
-    print(ins)
     db.session.execute(ins)
     db.session.commit()
 
