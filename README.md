@@ -112,11 +112,11 @@ $give_pack MRD 5 @player1 @player2
   
   |Cod|Name                            |
   |---|--------------------------------|
-  |PSV|Pharaoh's Servant               |
+  |LOB|Legend of Blue Eyes White Dragon|
   |MRD|Metal Raiders                   |
   |MRL|Magic Ruler                     |
+  |PSV|Pharaoh's Servant               |
   |LON|Labyrinth of Nightmare          |
-  |LOB|Legend of Blue Eyes White Dragon|
 </details>
 
 The command *give_card* has yet to be implemented.
