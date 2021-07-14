@@ -5,7 +5,7 @@ from discord.ext.commands.errors import *
 from notebooks.dao import player_dao, set_dao, opening_dao
 
 
-class UserData(commands.Cog):
+class Openings(commands.Cog):
 
     def __init__(self, client):
         self.client = client
@@ -49,4 +49,4 @@ class UserData(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(UserData(bot))
+    bot.add_cog(Openings(bot))

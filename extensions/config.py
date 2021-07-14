@@ -4,7 +4,7 @@ from discord.ext.commands import MissingRequiredArgument, MissingPermissions
 from notebooks import config_utils
 
 
-class ServerData(commands.Cog):
+class Config(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -26,4 +26,4 @@ class ServerData(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(ServerData(bot))
+    bot.add_cog(Config(bot))
