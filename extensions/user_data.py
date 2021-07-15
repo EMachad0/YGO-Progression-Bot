@@ -26,7 +26,7 @@ class UserData(commands.Cog):
 
     @commands.command()
     async def exit(self, ctx):
-        discord_user_dao.drop_discord_user(ctx.user.id)
+        discord_user_dao.drop_discord_user(ctx.author.id)
         await ctx.message.add_reaction('✅')
 
     @commands.command()
