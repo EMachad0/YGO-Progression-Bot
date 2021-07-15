@@ -23,8 +23,11 @@ def update_opening(open_cod, values):
 
 
 def get_player_available_openings(player_cod):
+    from notebooks.dao import Set
     return db.session.query(Opening.open_cod, Opening.set_cod, Opening.quantity). \
-        filter(Opening.player_cod == player_cod, Opening.quantity > 0).all()
+        filter(Opening.player_cod == player_cod, Opening.quantity > 0) \
+        .join(Set, Opening.set_cod == Set.set_cod) \
+        .order_by(Set.release_date).all()
 
 
 def get_openings_by_player(player_cod):
