@@ -1,24 +1,16 @@
 from random import choice, choices
 
 
-def get_common_type():
-    rarity = ['Common', 'Short Print', 'Super Short Print']
-    odds = [57, 2, 1]
-    return choices(rarity, weights=odds, k=1)[0]
+def get_random_rarity(rarities):
+    return choices(list(rarities.keys()), weights=rarities.values(), k=1)[0]
 
 
-def get_foil_type():
-    rarity = ['Super Rare', 'Ultra Rare', 'Secret Rare']
-    odds = [9, 2, 1]
-    return choices(rarity, weights=odds, k=1)[0]
-
-
-def get_pack_rarities():
-    return [get_common_type() for _ in range(7)] + ["Rare"] + [get_foil_type()]
-
-
-def get_random_pack(card_pool):
-    pack = [choice(card_pool[rarity]) for rarity in get_pack_rarities()]
+def get_random_pack(card_pool, set_type):
+    for c in set_type:
+        for rar in c:
+            if card_pool.get(rar) is None:
+                c[rar] = 0
+    pack = [choice(card_pool[get_random_rarity(rs)]) for rs in set_type]
     return pack
 
 
