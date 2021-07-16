@@ -114,9 +114,31 @@ $give_pack MRD 5 @player1 @player2
   |---|--------------------------------|
   |LOB|Legend of Blue Eyes White Dragon|
   |MRD|Metal Raiders                   |
+  |TP1|Tournament Pack: 1st Season     |
   |MRL|Magic Ruler                     |
+  |TP2|Tournament Pack: 2nd Season     |
   |PSV|Pharaoh's Servant               |
+  |TP3|Tournament Pack: 3rd Season     |
   |LON|Labyrinth of Nightmare          |
+  |LOD|Legacy of Darkness              |
+  |PGD|Pharaonic Guardian              |
+  |TP4|Tournament Pack 4               |
+  |MFC|Magician's Force                |
+  |DCR|Dark Crisis                     |
+  |IOC|Invasion of Chaos               |
+  |AST|Ancient Sanctuary               |
+  |SOD|Soul of the Duelist             |
+  |TP5|Tournament Pack 5               |
+  |RDS|Rise of Destiny                 |
+  |FET|Flaming Eternity                |
+  |TP6|Tournament Pack 6               |
+  |TLM|The Lost Millennium             |
+  |CRV|Cybernetic Revolution           |
+  |TP7|Tournament Pack 7               |
+  |EEN|Elemental Energy                |
+  |SOI|Shadow of Infinity              |
+  |TP8|Tournament Pack 8               |
+  |EOJ|Enemy of Justice                |
 </details>
 
 The command *give_card* has yet to be implemented.
