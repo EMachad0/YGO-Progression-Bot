@@ -1,3 +1,4 @@
+import requests
 from random import choice, choices
 
 
@@ -21,3 +22,9 @@ def get_card_pool(set_cards):
             card_pool[c.rarity] = []
         card_pool[c.rarity].append(c)
     return card_pool
+
+
+def get_api_pack(sett):
+    url = "https://db.ygoprodeck.com/queries/pack-opener/pack-open.php?" \
+          f"format={sett['set_name'].replace(' ', '%20')}&settype={sett['type_cod']}"
+    return requests.get(url).json()
