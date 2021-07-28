@@ -17,4 +17,3 @@ class Card(db.Model):
     cod_img = db.Column(db.Integer)
     link_val = db.Column(db.Integer)
     link_markers = db.Column(db.Integer)
-    
