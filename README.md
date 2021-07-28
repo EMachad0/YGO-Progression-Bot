@@ -157,7 +157,13 @@ $give_pack MRD 5 @player1 @player2
   |CP06|Champion Pack: Game Six         |
   |LODT|Light of Destruction            |
   |CP07|Champion Pack: Game Seven       |
+  |TDGS|The Duelist Genesis             |
+  |CSOC|Crossroads of Chaos             |
   |CP08|Champion Pack: Game Eight       |
+  |ANPR|Ancient Prophecy                |
+  |SOVR|Stardust Overdrive              |
+  |ABPF|Absolute Powerforce             |
+  |TSHD|The Shining Darkness            |
 </details>
 
 The command *give_card* has yet to be implemented.
