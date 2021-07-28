@@ -145,11 +145,17 @@ $give_pack MRD 5 @player1 @player2
   |CP02|Champion Pack: Game Two         |
   |DP05|Duelist Pack: Aster Phoenix     |
   |DP03|Duelist Pack: Jaden Yuki 2      |
+  |STON|Strike of Neos                  |
   |DP04|Duelist Pack: Zane Truesdale    |
   |CP03|Champion Pack: Game Three       |
+  |FOTB|Force of the Breaker            |
+  |TAEV|Tactical Evolution              |
   |CP04|Champion Pack: Game Four        |
+  |GLAS|Gladiator's Assault             |
   |CP05|Champion Pack: Game Five        |
+  |PTDN|Phantom Darkness                |
   |CP06|Champion Pack: Game Six         |
+  |LODT|Light of Destruction            |
   |CP07|Champion Pack: Game Seven       |
   |CP08|Champion Pack: Game Eight       |
 </details>
