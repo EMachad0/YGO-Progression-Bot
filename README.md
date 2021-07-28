@@ -136,11 +136,16 @@ $give_pack MRD 5 @player1 @player2
   |CRV |Cybernetic Revolution           |
   |TP7 |Tournament Pack 7               |
   |EEN |Elemental Energy                |
+  |DP1 |Duelist Pack: Jaden Yuki        |
+  |DP2 |Duelist Pack: Chazz Princeton   |
   |SOI |Shadow of Infinity              |
   |TP8 |Tournament Pack 8               |
   |EOJ |Enemy of Justice                |
   |CP01|Champion Pack: Game One         |
   |CP02|Champion Pack: Game Two         |
+  |DP05|Duelist Pack: Aster Phoenix     |
+  |DP03|Duelist Pack: Jaden Yuki 2      |
+  |DP04|Duelist Pack: Zane Truesdale    |
   |CP03|Champion Pack: Game Three       |
   |CP04|Champion Pack: Game Four        |
   |CP05|Champion Pack: Game Five        |
