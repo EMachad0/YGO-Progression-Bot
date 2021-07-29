@@ -41,7 +41,7 @@ This project was develop by a single Brazilian CS Student, while I don't expect 
 However, currently the project has monetary limitations, I can't pay for the servers this project runs on, that's why I need your contribution.
 
 **With the current server there is a limit of 10000 database lines, that's why there are many sets missing and a per server player limit.**
-(Currently only the first 5 sets are available) (there exists more cards than database lines).
+(there exists more cards than the database line limit).
 
 <h1 align="center">
     <a href="https://ko-fi.com/ygoprogressionbot">
