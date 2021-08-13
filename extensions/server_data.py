@@ -44,7 +44,9 @@ class ServerData(commands.Cog):
         if isinstance(error, commands.MissingPermissions):
             await ctx.message.add_reaction('❌')
         else:
-            raise error
+            print(error)
+            await ctx.send("OH NO!!! Something broke pls tell @Machado on\n"
+                           "https://discord.com/invite/ztj2kSk")
 
 
 def setup(bot):

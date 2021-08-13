@@ -50,6 +50,12 @@ class UserData(commands.Cog):
         embed.set_author(name=discord_user.name, icon_url=discord_user.img_url)
         await ctx.send(embed=embed)
 
+    @status.error
+    async def server_data_error(self, ctx, error):
+        print(error)
+        await ctx.send("OH NO!!! Something broke pls tell @Machado on\n"
+                       "https://discord.com/invite/ztj2kSk")
+
 
 def setup(bot):
     bot.add_cog(UserData(bot))
