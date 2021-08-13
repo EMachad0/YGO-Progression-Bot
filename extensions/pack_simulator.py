@@ -36,12 +36,14 @@ class PackSimulator(commands.Cog):
             return
         if set_cod is None:
             opening = opening_dao.get_openings_by_player(player.player_cod)
-            set_cod = opening.set_cod
         else:
             opening = opening_dao.get_opening_by_set_player(set_cod, player.player_cod)
-        if opening is None or opening.quantity == 0:
+        if opening is None:
             await ctx.message.add_reaction('❌')
+            await ctx.send("You have no packs available!\n"
+                           "The admin must give you packs with the give_pack command first.")
             return
+        set_cod = opening.set_cod
 
         channel = ctx if config_utils.get_config(ctx.guild.id, "private_pack") == "False" else ctx.author
 
