@@ -41,7 +41,7 @@ This project was develop by a single Brazilian CS Student, while I don't expect 
 However, currently the project has monetary limitations, I can't pay for the servers this project runs on, that's why I need your contribution.
 
 **With the current server there is a limit of 10000 database lines, that's why there are many sets missing and a per server player limit.**
-(Currently only the first 5 sets are available) (there exists more cards than database lines).
+(there exists more cards than the database line limit).
 
 <h1 align="center">
     <a href="https://ko-fi.com/ygoprogressionbot">
@@ -110,13 +110,60 @@ $give_pack MRD 5 @player1 @player2
 <details>
   <summary>Available pack codes</summary>
   
-  |Cod|Name                            |
-  |---|--------------------------------|
-  |LOB|Legend of Blue Eyes White Dragon|
-  |MRD|Metal Raiders                   |
-  |MRL|Magic Ruler                     |
-  |PSV|Pharaoh's Servant               |
-  |LON|Labyrinth of Nightmare          |
+  |Code|Name                            |
+  |--- |--------------------------------|
+  |LOB |Legend of Blue Eyes White Dragon|
+  |MRD |Metal Raiders                   |
+  |TP1 |Tournament Pack: 1st Season     |
+  |MRL |Magic Ruler                     |
+  |TP2 |Tournament Pack: 2nd Season     |
+  |PSV |Pharaoh's Servant               |
+  |TP3 |Tournament Pack: 3rd Season     |
+  |LON |Labyrinth of Nightmare          |
+  |LOD |Legacy of Darkness              |
+  |PGD |Pharaonic Guardian              |
+  |TP4 |Tournament Pack 4               |
+  |MFC |Magician's Force                |
+  |DCR |Dark Crisis                     |
+  |IOC |Invasion of Chaos               |
+  |AST |Ancient Sanctuary               |
+  |SOD |Soul of the Duelist             |
+  |TP5 |Tournament Pack 5               |
+  |RDS |Rise of Destiny                 |
+  |FET |Flaming Eternity                |
+  |TP6 |Tournament Pack 6               |
+  |TLM |The Lost Millennium             |
+  |CRV |Cybernetic Revolution           |
+  |TP7 |Tournament Pack 7               |
+  |EEN |Elemental Energy                |
+  |DP1 |Duelist Pack: Jaden Yuki        |
+  |DP2 |Duelist Pack: Chazz Princeton   |
+  |SOI |Shadow of Infinity              |
+  |TP8 |Tournament Pack 8               |
+  |EOJ |Enemy of Justice                |
+  |CP01|Champion Pack: Game One         |
+  |CP02|Champion Pack: Game Two         |
+  |DP05|Duelist Pack: Aster Phoenix     |
+  |DP03|Duelist Pack: Jaden Yuki 2      |
+  |STON|Strike of Neos                  |
+  |DP04|Duelist Pack: Zane Truesdale    |
+  |CP03|Champion Pack: Game Three       |
+  |FOTB|Force of the Breaker            |
+  |TAEV|Tactical Evolution              |
+  |CP04|Champion Pack: Game Four        |
+  |GLAS|Gladiator's Assault             |
+  |CP05|Champion Pack: Game Five        |
+  |PTDN|Phantom Darkness                |
+  |CP06|Champion Pack: Game Six         |
+  |LODT|Light of Destruction            |
+  |CP07|Champion Pack: Game Seven       |
+  |TDGS|The Duelist Genesis             |
+  |CSOC|Crossroads of Chaos             |
+  |CP08|Champion Pack: Game Eight       |
+  |ANPR|Ancient Prophecy                |
+  |SOVR|Stardust Overdrive              |
+  |ABPF|Absolute Powerforce             |
+  |TSHD|The Shining Darkness            |
 </details>
 
 The command *give_card* has yet to be implemented.
