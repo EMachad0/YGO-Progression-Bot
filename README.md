@@ -201,6 +201,8 @@ Use the fields and Options to filter/sort, and you can Drag/Drop or Right Click 
 
 That is it, there is no magic here, the ui should be intuitive enough, but you can message me any questions.
 
+[Example collection](https://ygo-prog-web-front.herokuapp.com/#/collection/456912106864902144/203615933539942400)
+
 Any questions? You can contact me on this [Discord](https://discord.gg/ztj2kSk) Server.
 
 ### Web Screenshot:
