@@ -181,7 +181,7 @@ Configs are keywords to make so the admin can customize the game and implement t
 ```
 $config ban_list May 2002
 ```
-Here, *ban_list* is the key while *May 2002* is the value, this command is setting the server banlist to the [May 2002](https://yugipedia.com/wiki/May_2002_Lists_(TCG)) lists.
+Here, *ban_list* is the key while *May 2002* is the value, this command is setting the server banlist to the [May 2002](https://yugipedia.com/wiki/May_2002_Lists_(TCG)) list.
 
 Supported configs for now:
 |Key         |Supported Values                    |Info                                                  |Default Behavior               |
