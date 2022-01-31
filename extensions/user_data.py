@@ -3,7 +3,7 @@ import os
 from discord import Embed
 from discord.ext import commands
 
-from notebooks.dao import discord_user_dao, player_dao, opening_dao
+from notebooks.dao import discord_user_dao, discord_server_dao, player_dao, opening_dao
 
 MAX_PLAYER_COUNT = int(os.environ['MAX_PLAYER_COUNT'])
 
@@ -16,6 +16,10 @@ class UserData(commands.Cog):
     async def enter(self, ctx):
         user = ctx.author
         guild = ctx.guild
+        server = discord_server_dao.get_discord_server(ctx.guild.id)
+        if server is None:
+            await ctx.send("No game running")
+            return
         player_count = player_dao.get_player_count_by_server(guild.id)
         if player_count >= MAX_PLAYER_COUNT:
             await ctx.send("Player limit reached!")
@@ -50,6 +54,8 @@ class UserData(commands.Cog):
         embed.set_author(name=discord_user.name, icon_url=discord_user.img_url)
         await ctx.send(embed=embed)
 
+    @enter.error
+    @exit.error
     @status.error
     async def server_data_error(self, ctx, error):
         print(error)
